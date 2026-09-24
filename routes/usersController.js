@@ -1,6 +1,17 @@
 const User = require("./usersModel");
 const bcrypt = require("bcrypt");
 
+
+// GET
+const getUsers = async (req,res) => {
+    try {
+        const users = await User.find().select("username -_id");
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
 /*
 req.body - { username: "examleUserName", password: "examplePassword123" }
 
@@ -51,4 +62,4 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { createUser, login };
+module.exports = { createUser, login, getUsers };
